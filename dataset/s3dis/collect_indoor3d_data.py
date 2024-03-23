@@ -1,34 +1,18 @@
-import argparse
 from os import path as osp
-
 import os
-from indoor_3d_utils import export
+from indoor_3d_utils import *
 
-parser = argparse.ArgumentParser()
-parser.add_argument(
-    '--output-folder',
-    default='./s3dis_data',
-    help='output folder of the result.')
-parser.add_argument(
-    '--data-dir',
-    default='Stanford3dDataset_v1.2_Aligned_Version',
-    help='s3dis data directory.')
-parser.add_argument(
-    '--ann-file',
-    default='meta_data/anno_paths.txt',
-    help='The path of the file that stores the annotation names.')
-args = parser.parse_args()
+ann_file = '/content/Stanford3dDataset_v1.2_Aligned_Version/meta_data/anno_paths.txt'
+output_folder = '/content/Stanford_data'
 
-anno_paths = [line.rstrip() for line in open(args.ann_file)]
-anno_paths = [osp.join(args.data_dir, p) for p in anno_paths]
-
-output_folder = args.output_folder
-os.mkdir(output_folder)
+anno_paths = [line.rstrip() for line in open(ann_file)]
+anno_paths = [osp.join(BASE_DIR, p) for p in anno_paths]
+os.mkdir(output_folder,exist_ok=True)
 
 # Note: there is an extra character in the v1.2 data in Area_5/hallway_6.
 # It's fixed manually here.
 # Refer to https://github.com/AnTao97/dgcnn.pytorch/blob/843abe82dd731eb51a4b3f70632c2ed3c60560e9/prepare_data/collect_indoor3d_data.py#L18  # noqa
-revise_file = osp.join(args.data_dir,
+revise_file = osp.join(BASE_DIR,
                        'Area_5/hallway_6/Annotations/ceiling_1.txt')
 with open(revise_file, 'r') as f:
     data = f.read()

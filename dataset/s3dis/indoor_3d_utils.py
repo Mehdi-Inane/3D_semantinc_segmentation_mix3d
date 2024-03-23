@@ -7,13 +7,13 @@ import numpy as np
 # CONSTANTS
 # -----------------------------------------------------------------------------
 
-BASE_DIR = osp.dirname(osp.abspath(__file__))
+BASE_DIR = '/content/Stanford3dDataset_v1.2_Aligned_Version'
 
 class_names = [
     x.rstrip() for x in open(osp.join(BASE_DIR, 'meta_data/class_names.txt'))
 ]
 class2label = {one_class: i for i, one_class in enumerate(class_names)}
-
+print(class2label)
 # -----------------------------------------------------------------------------
 # CONVERT ORIGINAL DATA TO POINTS, SEM_LABEL AND INS_LABEL FILES
 # -----------------------------------------------------------------------------
@@ -50,5 +50,5 @@ def export(anno_path, out_filename):
     data_label[:, 0:3] -= xyz_min
 
     np.save(f'{out_filename}_point.npy', data_label[:, :6].astype(np.float32))
-    np.save(f'{out_filename}_sem_label.npy', data_label[:, 6].astype(np.int))
-    np.save(f'{out_filename}_ins_label.npy', data_label[:, 7].astype(np.int))
+    np.save(f'{out_filename}_sem_label.npy', data_label[:, 6].astype(np.int8))
+    np.save(f'{out_filename}_ins_label.npy', data_label[:, 7].astype(np.int8))
