@@ -2,12 +2,12 @@ from os import path as osp
 import os
 from indoor_3d_utils import *
 
-ann_file = '/content/Stanford3dDataset_v1.2_Aligned_Version/meta_data/anno_paths.txt'
-output_folder = '/content/Stanford_data'
+ann_file = '../../data/Stanford3dDataset_v1.2_Aligned_Version/meta_data/anno_paths.txt'
+output_folder = '../../data/Stanford_data'
 
 anno_paths = [line.rstrip() for line in open(ann_file)]
 anno_paths = [osp.join(BASE_DIR, p) for p in anno_paths]
-os.mkdir(output_folder,exist_ok=True)
+os.mkdir(output_folder)
 
 # Note: there is an extra character in the v1.2 data in Area_5/hallway_6.
 # It's fixed manually here.

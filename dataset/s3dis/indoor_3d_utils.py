@@ -7,7 +7,7 @@ import numpy as np
 # CONSTANTS
 # -----------------------------------------------------------------------------
 
-BASE_DIR = '/content/Stanford3dDataset_v1.2_Aligned_Version'
+BASE_DIR = '../../data/Stanford3dDataset_v1.2_Aligned_Version'
 
 class_names = [
     x.rstrip() for x in open(osp.join(BASE_DIR, 'meta_data/class_names.txt'))
