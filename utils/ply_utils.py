@@ -100,7 +100,6 @@ def read_ply(filename):
     """
 
     with open(filename, 'rb') as plyfile:
-        print('we reag ro')
 
         # Check if the file start with ply
         if b'ply' not in plyfile.readline():
