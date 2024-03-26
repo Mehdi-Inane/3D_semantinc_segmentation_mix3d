@@ -3,3 +3,6 @@ env/*
 dataset/__pycache__
 utils/__pycache__
 dataset/transforms/__pycache__
+data.zip
+MinkowskiEngine/
+
