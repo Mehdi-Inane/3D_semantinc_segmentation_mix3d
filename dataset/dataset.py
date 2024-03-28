@@ -91,7 +91,7 @@ class S3DISDataset(Dataset):
     all_data = read_ply(filename)
     points = np.stack([np.array(all_data['x']),np.array(all_data['y']),np.array(all_data['z'])],axis=1)
     color = np.stack([all_data['red'],all_data['green'],all_data['blue']],axis = 1)
-    normals = np.stack([all_data['n_x'],all_data['n_y'],all_data['n_z']],axis = 1)
+    #normals = np.stack([all_data['n_x'],all_data['n_y'],all_data['n_z']],axis = 1)
     labels = all_data['label']
 
     if self.mode == 'train':
@@ -111,19 +111,18 @@ class S3DISDataset(Dataset):
           for granularity, magnitude in ((0.2, 0.4), (0.8, 1.6)):
                 coordinates = elastic_distortion(points, granularity, magnitude)
         aug = self.volume_augmentation(
-                points=points, normals=normals, features=color, labels=labels,
+                points=points, features=color, labels=labels,
             )
-        points, color, normals, labels = (
+        points, color, labels = (
                 aug["points"],
                 aug["features"],
-                aug["normals"],
                 aug["labels"],
             )
         pseudo_image = color.astype(np.uint8)[np.newaxis, :, :]
         color = np.squeeze(self.image_augmentation(image=pseudo_image)["image"])
         pseudo_image = color.astype(np.uint8)[np.newaxis, :, :]
         color = np.squeeze(self.normalize_color(image=pseudo_image)["image"])
-        features = np.hstack((color,normals))
+        features = color
         return points, features,labels
 
 
